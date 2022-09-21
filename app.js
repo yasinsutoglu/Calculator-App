@@ -21,6 +21,8 @@ let operator="";
             return total * (temp==0 ? temp=1: temp+=0);
         case "/":
             return total / (temp == 0 ? (temp = 1) : (temp += 0));
+        case "=":
+            return  temp==0 ? total : 0;
     }
  }
 
@@ -32,6 +34,11 @@ container.addEventListener("click",(e)=>{
          (str.includes(".") && el.textContent === ".") ? str += "" : str += el.textContent; 
          
          panel.textContent = Number(str);
+
+        //  if(operator === "="){
+        //     total = 0;
+        //     temp = Number(panel.textContent);
+        //  }
            
 
     }else if(el.classList.contains("operator")){
@@ -39,13 +46,21 @@ container.addEventListener("click",(e)=>{
         //    str = (total === 0) ? "" : panel.textContent;
         // temp = Number(panel.textContent);
 
+        //!Summation
         if (el.classList.contains("plus")) {
             if(str!==""){
-                temp = Number(panel.textContent);
-                total = !(operator === "") ? operate(operator) : (total + temp);
-                panel.textContent = total;
-                str = "";
-                operator = "+";
+                if(operator !== "="){
+                    temp = Number(panel.textContent);
+                    total = !(operator === "") ? operate(operator) : total + temp;
+                    panel.textContent = total;
+                    str = "";
+                    operator = "+";
+                 }else if(operator === "="){
+                        temp = Number(panel.textContent);
+                        total = operate(operator) + temp;
+                        str = "";
+                        operator = "+";
+                    }
             }else{
                 temp = 0;
                 total = Number(panel.textContent);
@@ -53,43 +68,68 @@ container.addEventListener("click",(e)=>{
                 operator = "+";
             }            
             
-             console.log(total , temp, operator)      
+             console.log(total , temp, operator)
+             //!Subtruction      
          }else if (el.classList.contains("sub")) {
             if(str!==""){
-               temp = Number(panel.textContent);
-                total = !(operator === "") ? operate(operator) : (total - temp);
-                panel.textContent = total;
-                str="";  
-                operator= "-"; 
+                if (operator !== "=") {
+                  temp = Number(panel.textContent);
+                  total = !(operator === "") ? operate(operator) : total - temp;
+                  panel.textContent = total;
+                  str = "";
+                  operator = "-";
+                } else if (operator === "=") {
+                  temp = Number(panel.textContent);
+                  total = operate(operator) - (-temp);
+                  str = "";
+                  operator = "-";
+                }
+                
             }else{
                 temp = 0;
                 total= Number(panel.textContent);
                 total = !(operator === "") ? operate(operator) : (total - temp);
                 operator = "-"; 
             }        
-            console.log(total, temp, operator);       
+            console.log(total, temp, operator); 
+            //! Multiplication      
         }else if (el.classList.contains("mult")) {
             if(str!==""){
-               temp = Number(panel.textContent);
-                total = !(operator === "") ? operate(operator) : ((total==0 ? total=1 : total+=0) * temp);
-                panel.textContent = total;
-                str="";  
-                operator= "*"; 
+                if(operator !== "="){
+                    temp = Number(panel.textContent);
+                    total = !(operator === "") ? operate(operator) : ((total==0 ? total=1 : total+=0) * temp);
+                    panel.textContent = total;
+                    str="";  
+                    operator= "*";
+                }else if(operator === "=") {
+                  temp = Number(panel.textContent);
+                  total = operate(operator) || 1 * (temp);
+                  str = "";
+                  operator = "*";
+                }
+               
             }else{
                 temp = 0;
                 total= Number(panel.textContent);
                 total = !(operator === "") ? operate(operator) : (total * 1);
                 operator = "*"; 
             }        
-            console.log(total, temp, operator);       
+            console.log(total, temp, operator); 
+            //! Division      
         }else if (el.classList.contains("div")) {
              if(str!==""){
-                 temp = Number(panel.textContent);
-                total = !(operator === "") ? operate(operator) : ( total == 0 ? total=temp : total+=0 );
-                panel.textContent = total;
-                str="";  
-                operator= "/";  
-                   
+                if (operator !== "=") {
+                  temp = Number(panel.textContent);
+                  total = !(operator === "") ? operate(operator) : total == 0 ? (total = temp) : (total += 0);
+                  panel.textContent = total;
+                  str = "";
+                  operator = "/";
+                } else if (operator === "=") {
+                  total= Number(panel.textContent)
+                  str = "";
+                  operator = "/";
+                }
+                  
             }else{
                 temp = 0;
                 total= Number(panel.textContent);
@@ -99,16 +139,18 @@ container.addEventListener("click",(e)=>{
              console.log(total, temp, operator);       
         }else if (el.classList.contains("result")) {
             if(str!==""){
-                 temp = Number(panel.textContent);
-                 total =  operate(operator) ;
-                panel.textContent = total;
-                str="";                     
-             }
-             else{
+                    temp = Number(panel.textContent);
+                    total = operate(operator);
+                    console.log("total:", total)
+                    panel.textContent = total;
+                    str = "";
+                    operator = "=";                                             
+             }else{
                 temp = 0;
                 total= Number(panel.textContent);
-                total = !(operator === "") ? operate(operator) : (total / 1);
-            }             
+                // total=0;
+            } 
+            console.log(total,temp,operator)            
         }
     }
    
