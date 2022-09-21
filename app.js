@@ -31,20 +31,11 @@ container.addEventListener("click",(e)=>{
 
     if(el.classList.contains("num")){
 
-         (str.includes(".") && el.textContent === ".") ? str += "" : str += el.textContent; 
-         
+         (str.includes(".") && el.textContent === ".") ? str += "" : str += el.textContent;         
          panel.textContent = Number(str);
 
-        //  if(operator === "="){
-        //     total = 0;
-        //     temp = Number(panel.textContent);
-        //  }
-           
-
     }else if(el.classList.contains("operator")){
-        
-        //    str = (total === 0) ? "" : panel.textContent;
-        // temp = Number(panel.textContent);
+       
 
         //!Summation
         if (el.classList.contains("plus")) {
@@ -74,7 +65,8 @@ container.addEventListener("click",(e)=>{
             if(str!==""){
                 if (operator !== "=") {
                   temp = Number(panel.textContent);
-                  total = !(operator === "") ? operate(operator) : total - temp;
+                  total = !(operator === "") ? operate(operator) : (total == 0 ? (-1)*(total - temp) : (total-temp));
+                  console.log("mytotal:",total)
                   panel.textContent = total;
                   str = "";
                   operator = "-";
@@ -136,7 +128,8 @@ container.addEventListener("click",(e)=>{
                 total = !(operator === "") ? operate(operator) : (total / 1);
                 operator = "/"; 
             }        
-             console.log(total, temp, operator);       
+             console.log(total, temp, operator); 
+             //!Result      
         }else if (el.classList.contains("result")) {
             if(str!==""){
                     temp = Number(panel.textContent);
@@ -152,6 +145,24 @@ container.addEventListener("click",(e)=>{
             } 
             console.log(total,temp,operator)            
         }
+        //! RESET
+    }else if(el.classList.contains("reset")){
+             temp=0;
+             total = 0;
+             str = "";
+             operator = "";
+             panel.textContent = total;
+    }else if(el.classList.contains("negate")){
+        if(total ===0){
+            if(str!==""){
+                panel.textContent = -Number(panel.textContent)
+            }
+        }else{
+            total = Number(panel.textContent);
+            total = total * -1;
+            panel.textContent = total;
+        }
+           
     }
    
 
