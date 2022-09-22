@@ -29,14 +29,16 @@ let operator="";
 container.addEventListener("click",(e)=>{
     const el = e.target;
 
+    //? NUMBER
     if(el.classList.contains("num")){
+        
+            (str.includes(".") && el.textContent === ".") ? str += "" : str += el.textContent;         
+            panel.textContent = Number(str);
 
-         (str.includes(".") && el.textContent === ".") ? str += "" : str += el.textContent;         
-         panel.textContent = Number(str);
-
+               
+    //? OPERATOR
     }else if(el.classList.contains("operator")){
        
-
         //!Summation
         if (el.classList.contains("plus")) {
             if(str!==""){
@@ -145,13 +147,14 @@ container.addEventListener("click",(e)=>{
             } 
             console.log(total,temp,operator)            
         }
-        //! RESET
+        //? RESET
     }else if(el.classList.contains("reset")){
              temp=0;
              total = 0;
              str = "";
              operator = "";
              panel.textContent = total;
+      //? NEGATE NUMBER
     }else if(el.classList.contains("negate")){
         if(total ===0){
             if(str!==""){
@@ -161,8 +164,23 @@ container.addEventListener("click",(e)=>{
             total = Number(panel.textContent);
             total = total * -1;
             panel.textContent = total;
+        }           
+    }
+    
+    if(el.className == "button num dot"){
+        if(operator !== "" && operator !== "="){
+            temp = 0;
+            str = ""+temp + el.innerText;
+            panel.textContent = Number(str);
+            console.log(temp,total,str, operator)
+
+        }else if(operator !=="" && operator === "="){
+            temp = 0;
+            total = 0;
+            str = total.toString() + el.innerText;
+            panel.textContent = str;
+            console.log(temp,total,str)
         }
-           
     }
    
 
