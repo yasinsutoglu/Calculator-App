@@ -62,8 +62,7 @@ container.addEventListener("click",(e)=>{
                 total = Number(panel.textContent);
                 total = !(operator === "") ? operate(operator) : (total + temp);
                 operator = "+";
-            }            
-            
+            }              
              
              //!Subtruction      
          }else if (el.classList.contains("sub")) {
@@ -186,8 +185,6 @@ container.addEventListener("click",(e)=>{
              str = "";
              panel.textContent = total;
         }
-        
-
         console.log(total,temp,operator,perTemp)
     }
     
@@ -213,9 +210,6 @@ container.addEventListener("click",(e)=>{
           str = total.toString() + el.innerText;
           panel.textContent = str;
           console.log(temp, total, str);
-        }
-        
+        }        
     }
-   
-
 })
