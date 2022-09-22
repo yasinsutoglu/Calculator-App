@@ -6,6 +6,7 @@ const percent = document.querySelector(".percent")
 const container = document.querySelector(".container")
 
 let temp;
+let perTemp;
 let total = 0;
 let str = "";
 let operator="";
@@ -48,6 +49,8 @@ container.addEventListener("click",(e)=>{
                     panel.textContent = total;
                     str = "";
                     operator = "+";
+                    perTemp = Number(panel.textContent)
+                    console.log(total, temp, operator);
                  }else if(operator === "="){
                         temp = Number(panel.textContent);
                         total = operate(operator) + temp;
@@ -61,7 +64,7 @@ container.addEventListener("click",(e)=>{
                 operator = "+";
             }            
             
-             console.log(total , temp, operator)
+             
              //!Subtruction      
          }else if (el.classList.contains("sub")) {
             if(str!==""){
@@ -72,6 +75,7 @@ container.addEventListener("click",(e)=>{
                   panel.textContent = total;
                   str = "";
                   operator = "-";
+                  perTemp = Number(panel.textContent);
                 } else if (operator === "=") {
                   temp = Number(panel.textContent);
                   total = operate(operator) - (-temp);
@@ -95,6 +99,7 @@ container.addEventListener("click",(e)=>{
                     panel.textContent = total;
                     str="";  
                     operator= "*";
+                    perTemp = Number(panel.textContent);
                 }else if(operator === "=") {
                   temp = Number(panel.textContent);
                   total = operate(operator) || 1 * (temp);
@@ -118,6 +123,7 @@ container.addEventListener("click",(e)=>{
                   panel.textContent = total;
                   str = "";
                   operator = "/";
+                  perTemp = Number(panel.textContent);
                 } else if (operator === "=") {
                   total= Number(panel.textContent)
                   str = "";
@@ -139,7 +145,8 @@ container.addEventListener("click",(e)=>{
                     console.log("total:", total)
                     panel.textContent = total;
                     str = "";
-                    operator = "=";                                             
+                    operator = "="; 
+                    perTemp = Number(panel.textContent);                                            
              }else{
                 temp = 0;
                 total= Number(panel.textContent);
@@ -154,7 +161,7 @@ container.addEventListener("click",(e)=>{
              str = "";
              operator = "";
              panel.textContent = total;
-      //? NEGATE NUMBER
+      //? NEGATE THE NUMBER
     }else if(el.classList.contains("negate")){
         if(total ===0){
             if(str!==""){
@@ -164,23 +171,42 @@ container.addEventListener("click",(e)=>{
             total = Number(panel.textContent);
             total = total * -1;
             panel.textContent = total;
-        }           
+        } 
+        //?TAKE PERCENTAGE          
+    }else if (el.classList.contains("percent")) {
+        temp = Number(panel.textContent)*perTemp / 100;
+        panel.textContent = temp
+
+        console.log(total,temp,operator,perTemp)
     }
     
+    //* DOT ADDED
     if(el.className == "button num dot"){
         if(operator !== "" && operator !== "="){
-            temp = 0;
-            str = ""+temp + el.innerText;
-            panel.textContent = Number(str);
-            console.log(temp,total,str, operator)
+            // console.log(total, temp, str, operator);
+
+            str =="."  ? (str = 0 +".") : (str+="");
+            panel.textContent = str;        
+
+            temp = (panel.textContent!=="") ? Number(panel.textContent) : 0 ;
+            
+             console.log(total, temp, str, operator);
+             str = (temp) + el.innerText;
+             panel.textContent = Number(str);
+            
+             console.log(total,temp,str, operator)
 
         }else if(operator !=="" && operator === "="){
-            temp = 0;
-            total = 0;
-            str = total.toString() + el.innerText;
-            panel.textContent = str;
-            console.log(temp,total,str)
+          temp = 0;
+          total = str=="" ? 0 : (str =="." ? 0 : Number(str));        
+          str = total.toString() + el.innerText;
+          panel.textContent = str;
+          console.log(temp, total, str);
         }
+        // else if(operator===""){
+        //     str = ""+0+el.innerText;
+        //     panel.textContent = str;
+        // }
     }
    
 
