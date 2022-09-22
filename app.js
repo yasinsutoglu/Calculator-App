@@ -30,7 +30,7 @@ let operator="";
 container.addEventListener("click",(e)=>{
     const el = e.target;
 
-    //? NUMBER
+    //? ENTERING NUMBER
     if(el.classList.contains("num")){
         
             (str.includes(".") && el.textContent === ".") ? str += "" : str += el.textContent;         
@@ -71,7 +71,6 @@ container.addEventListener("click",(e)=>{
                 if (operator !== "=") {
                   temp = Number(panel.textContent);
                   total = !(operator === "") ? operate(operator) : (total == 0 ? (-1)*(total - temp) : (total-temp));
-                  console.log("mytotal:",total)
                   panel.textContent = total;
                   str = "";
                   operator = "-";
@@ -140,13 +139,17 @@ container.addEventListener("click",(e)=>{
              //!Result      
         }else if (el.classList.contains("result")) {
             if(str!==""){
+                if(operator!==""){
                     temp = Number(panel.textContent);
                     total = operate(operator);
-                    console.log("total:", total)
                     panel.textContent = total;
                     str = "";
                     operator = "="; 
-                    perTemp = Number(panel.textContent);                                            
+                    perTemp = Number(panel.textContent);
+                }else if(operator ==""){
+                    temp = Number(panel.textContent)
+                    panel.textContent = temp;
+                }                                                                
              }else{
                 temp = 0;
                 total= Number(panel.textContent);
@@ -154,7 +157,7 @@ container.addEventListener("click",(e)=>{
             } 
             console.log(total,temp,operator)            
         }
-        //? RESET
+    //? RESET
     }else if(el.classList.contains("reset")){
              temp=0;
              total = 0;
@@ -174,8 +177,16 @@ container.addEventListener("click",(e)=>{
         } 
         //?TAKE PERCENTAGE          
     }else if (el.classList.contains("percent")) {
-        temp = Number(panel.textContent)*perTemp / 100;
-        panel.textContent = temp
+        if(operator!==""){
+            temp = (Number(panel.textContent) * perTemp) / 100;
+            panel.textContent = temp;
+        }else{
+             temp = 0;
+             total = 0;
+             str = "";
+             panel.textContent = total;
+        }
+        
 
         console.log(total,temp,operator,perTemp)
     }
@@ -203,10 +214,7 @@ container.addEventListener("click",(e)=>{
           panel.textContent = str;
           console.log(temp, total, str);
         }
-        // else if(operator===""){
-        //     str = ""+0+el.innerText;
-        //     panel.textContent = str;
-        // }
+        
     }
    
 
